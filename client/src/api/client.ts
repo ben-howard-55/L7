@@ -6,7 +6,6 @@ export interface Card {
 }
 
 export type Calendar = Array<Array<1 | 2 | 3 | 4 | 5 | 6 | 7>>;
-
 export interface Response<T> {
   status: number;
   body: T;
