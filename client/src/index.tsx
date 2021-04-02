@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import authConfig from './authConfig';
 import store from './redux/store';
+import './styles/index.scss';
 
 Auth.configure(authConfig);
 
