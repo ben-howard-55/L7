@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import AppContainer from './components/AppContainer';
+import Login from './pages/Login';
 import { hydrateAuth } from './redux/authSlice/thunks/hydrateThunk';
 import { RootState, useAppDispatch } from './redux/store';
 
@@ -23,9 +25,9 @@ const App = () => {
   }
 
   return (
-    <Router>
-      {isAuthenticated ? <h1>You are authenticated</h1> : <h1>You are not authenticated</h1>}
-    </Router>
+    <AppContainer>
+      <Router>{isAuthenticated ? <h1>You are authenticated</h1> : <Login />}</Router>
+    </AppContainer>
   );
 };
 
