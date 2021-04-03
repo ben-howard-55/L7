@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import AppContainer from './components/AppContainer';
 import AuthRouter from './pages/auth/AuthWrapper';
-import Dashboard from './pages/auth/Dashboard';
+import Dashboard from './pages/Dashboard';
 import AddCard from './pages/card/AddCard';
 import CardList from './pages/card/CardList';
 

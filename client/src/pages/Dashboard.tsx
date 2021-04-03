@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import Centered from '../../components/Centered';
-import Graph from '../../components/Graph';
-import Header from '../../components/Header';
+import Centered from '../components/Centered';
+import Graph from '../components/Graph';
+import Header from '../components/Header';
+import { fetchCalendarData } from '../redux/appSlice/thunks/fetchCalendarData';
+import { RootState, useAppDispatch } from '../redux/store';
 
 const Dashboard: React.FC = () => {
+  const selector = (state: RootState) => ({
+    calendar: state.app.calendar,
+    cyclePosition: state.app.cyclePosition,
+    hydrated: state.app.hydratedCalendar,
+  });
+  const dispatch = useAppDispatch();
+  const appState = useSelector(selector);
   const history = useHistory();
+
+  useEffect(() => {
+    if (appState.hydrated === false) {
+      dispatch(fetchCalendarData());
+    }
+  }, [dispatch]);
 
   return (
     <Container fluid>
@@ -15,7 +31,7 @@ const Dashboard: React.FC = () => {
         <Container fluid className={'mb-5'}>
           <Row>
             <Col xs={12}>
-              <Graph />
+              <Graph calendar={appState.calendar} />
             </Col>
           </Row>
           <Row className={'mt-4'}>

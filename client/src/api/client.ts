@@ -57,7 +57,7 @@ const getAllCards = async (): Promise<Response<Array<Card>>> => ({
 const getCalendar = async (): Promise<Response<GetCalendarResponse>> => ({
   status: 200,
   body: {
-    calendar: [[1, 2, 3]],
+    calendar: [[1, 2, 3], [1], [1, 2]],
     cyclePosition: 1,
   },
 });
