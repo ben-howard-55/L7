@@ -6,6 +6,7 @@ export interface Card {
 }
 
 export type Calendar = Array<Array<1 | 2 | 3 | 4 | 5 | 6 | 7>>;
+
 export interface Response<T> {
   status: number;
   body: T;
@@ -16,7 +17,7 @@ export interface GetCalendarResponse {
   cyclePosition: number;
 }
 
-const addCard = (frontText: string, backText: string): Response<Card> => ({
+const addCard = async (frontText: string, backText: string): Promise<Response<Card>> => ({
   status: 201,
   body: {
     cardId: '1',
@@ -26,27 +27,27 @@ const addCard = (frontText: string, backText: string): Response<Card> => ({
   },
 });
 
-const updateLevel = (cardId: string): Response<number> => ({
+const updateLevel = async (cardId: string): Promise<Response<number>> => ({
   status: 200,
   body: 1,
 });
 
-const deleteCard = (cardId: string): Response<undefined> => ({
+const deleteCard = async (cardId: string): Promise<Response<undefined>> => ({
   status: 301,
   body: undefined,
 });
 
-const getTodaysCards = (): Response<Array<Card>> => ({
+const getTodaysCards = async (): Promise<Response<Array<Card>>> => ({
   status: 200,
   body: [],
 });
 
-const getAllCards = (): Response<Array<Card>> => ({
+const getAllCards = async (): Promise<Response<Array<Card>>> => ({
   status: 200,
   body: [],
 });
 
-const getCalendar = (): Response<GetCalendarResponse> => ({
+const getCalendar = async (): Promise<Response<GetCalendarResponse>> => ({
   status: 200,
   body: {
     calendar: [],
@@ -54,7 +55,7 @@ const getCalendar = (): Response<GetCalendarResponse> => ({
   },
 });
 
-const updateCyclePosition = (): Response<number> => ({
+const updateCyclePosition = async (): Promise<Response<number>> => ({
   status: 201,
   body: 2,
 });

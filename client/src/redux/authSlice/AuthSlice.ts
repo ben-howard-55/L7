@@ -5,8 +5,8 @@ import { loginThunkReducers } from './thunks/loginThunk';
 import { signupThunkReducers } from './thunks/signupThunk';
 import { confirmSignupThunkReducers } from './thunks/confirmSignupThunk';
 
-const stateSlice = createSlice({
-  name: 'state',
+const authSlice = createSlice({
+  name: 'auth',
   initialState: {
     isAuthenticated: false,
     isHydrated: false,
@@ -23,6 +23,6 @@ const stateSlice = createSlice({
   },
 });
 
-const { reducer } = stateSlice;
+const { reducer } = authSlice;
 
 export default reducer;
