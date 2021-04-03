@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "experimentalDecorators": true,
+        "outDir": "ts-built",
+        "esModuleInterop": true,
+        "rootDir": "lambdas"
+    }
+}

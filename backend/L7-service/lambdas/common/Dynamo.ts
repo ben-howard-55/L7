@@ -2,20 +2,20 @@ const AWS = require('aws-sdk');
 
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
-const Dyanmo = {
-    async get (userId, cardId, TableName) {
+const Dynamo = {
+    async get (UserID, CardID, TableName) {
         const params = {
             TableName,
             Key: {
-                userId,
-                cardId
+                CardID,
+                UserID
             }
         };
 
         const data = await documentClient.get(params).promise();
 
         if (!data || !data.Item) {
-            throw Error(`There was an error fetching the data for CardID of ${CardID} from ${TableName}`);
+            return null;
         }
         console.log(data);
 
@@ -23,4 +23,5 @@ const Dyanmo = {
     }
 };
 
-module.exports = Dyanmo;
+
+export default Dynamo;
