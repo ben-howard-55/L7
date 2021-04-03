@@ -1,8 +1,9 @@
 import { Calendar, Card } from '../../api/client';
 
 type AppState = {
-  hydrated: boolean;
+  hydratedCalendar: boolean;
   calendar: Calendar;
+  hydratedCards: boolean;
   cards: Array<Card>;
   cyclePosition: number;
 };

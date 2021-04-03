@@ -1,5 +1,6 @@
 import { Button, Nav, Navbar } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { logout } from '../redux/authSlice/thunks/logoutThunk';
 import { RootState, useAppDispatch } from '../redux/store';
 
@@ -11,7 +12,9 @@ const Header: React.FC = () => {
   return (
     <Navbar>
       <Navbar.Brand>L7</Navbar.Brand>
-      <Nav.Link href={'/dashboard'}>Dashboard</Nav.Link>
+      <Nav.Item>
+        <Link to={'/dashboard'}>Dashboard</Link>
+      </Nav.Item>
       <Navbar.Collapse />
       <Nav.Item>
         Signed in as {username}{' '}

@@ -10,6 +10,8 @@ import TextField from '../../components/Form/TextField';
 import TextArea from '../../components/Form/TextArea';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
+import { useAppDispatch } from '../../redux/store';
+import { addCard } from '../../redux/appSlice/thunks/addCard';
 
 interface AddCardFields {
   frontText: string;
@@ -30,13 +32,19 @@ const AddCard: React.FC = () => {
   const formMethods = useForm({
     resolver: yupResolver(schema),
   });
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState<boolean>(false);
   const { handleSubmit, reset } = formMethods;
 
-  const submitHandler = (data: AddCardFields) => {
+  const submitHandler = ({ frontText, backText }: AddCardFields) => {
     setLoading(true);
-    console.log(data);
+    const res = dispatch(
+      addCard({
+        frontText,
+        backText,
+      })
+    );
     toast('Card Created successfully!', {
       type: 'success',
       position: 'bottom-center',

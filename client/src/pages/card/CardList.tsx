@@ -1,31 +1,75 @@
-import React from 'react';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 import Header from '../../components/Header';
+import { fetchAllCards } from '../../redux/appSlice/thunks/fetchAllCards';
+import { removeCard } from '../../redux/appSlice/thunks/removeCard';
+import { RootState, useAppDispatch } from '../../redux/store';
 
 const CardList: React.FC = () => {
-  const a = 3;
+  const selector = (state: RootState) => ({
+    cards: state.app.cards,
+    hydrated: state.app.hydratedCards,
+  });
+  const dispatch = useAppDispatch();
+  const cardState = useSelector(selector);
+  const history = useHistory();
+
+  const deleteCard = async (cardId: string) => {
+    const res = await dispatch(removeCard({ cardId }));
+    if (removeCard.fulfilled.match(res)) {
+      toast('Card Deleted successfully!', {
+        type: 'success',
+        position: 'bottom-center',
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (cardState.hydrated === false) {
+      dispatch(fetchAllCards());
+    }
+  }, [dispatch]);
 
   return (
     <Container fluid>
       <Header />
-      <h1>Cards</h1>
+      <Row>
+        <Col xs={'auto'}>
+          <h1>Cards</h1>
+        </Col>
+        <Col>
+          <Button onClick={() => history.push('cards/add')}>Add Card</Button>
+        </Col>
+      </Row>
+
       <Container fluid>
         <Row>
           <Col>
             <Table>
               <thead>
-                <th>Card Front Text</th>
-                <th>Card Back Text</th>
-                <th>Level</th>
-                <th>Actions</th>
+                <tr>
+                  <th>Card Front Text</th>
+                  <th>Card Back Text</th>
+                  <th>Level</th>
+                  <th>Actions</th>
+                </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>some text</td>
-                  <td>back text uwu</td>
-                  <td>3</td>
-                  <td>delete me</td>
-                </tr>
+                {cardState.cards.map((c, i) => (
+                  <tr key={i}>
+                    <td>{c.frontText}</td>
+                    <td>{c.backText}</td>
+                    <td>{c.level}</td>
+                    <td>
+                      <Button size={'sm'} variant={'link'} onClick={() => deleteCard(c.cardId)}>
+                        delete me
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </Col>

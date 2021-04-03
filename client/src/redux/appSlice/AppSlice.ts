@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAppDataThunkReducers } from './thunks/fetchAppData';
+import AppState from './appState';
+import { addCardThunkReducers } from './thunks/addCard';
+import { fetchCalendarDataThunkReducers } from './thunks/fetchCalendarData';
+import { fetchAllCardsThunkReducers } from './thunks/fetchAllCards';
+import { removeCardThunkReducers } from './thunks/removeCard';
 
 const appSlice = createSlice({
   name: 'appState',
@@ -7,11 +11,15 @@ const appSlice = createSlice({
     cards: [],
     calendar: [],
     cyclePosition: 0,
-    hydrated: false,
-  },
+    hydratedCalendar: false,
+    hydratedCards: false,
+  } as AppState,
   reducers: {},
   extraReducers: (builder) => {
-    fetchAppDataThunkReducers(builder);
+    fetchCalendarDataThunkReducers(builder);
+    addCardThunkReducers(builder);
+    removeCardThunkReducers(builder);
+    fetchAllCardsThunkReducers(builder);
   },
 });
 

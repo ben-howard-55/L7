@@ -20,7 +20,7 @@ export interface GetCalendarResponse {
 const addCard = async (frontText: string, backText: string): Promise<Response<Card>> => ({
   status: 201,
   body: {
-    cardId: '1',
+    cardId: `${Date.now()}`,
     frontText,
     backText,
     level: 1,
@@ -44,13 +44,20 @@ const getTodaysCards = async (): Promise<Response<Array<Card>>> => ({
 
 const getAllCards = async (): Promise<Response<Array<Card>>> => ({
   status: 200,
-  body: [],
+  body: [
+    {
+      cardId: '12',
+      frontText: 'Sample card',
+      backText: 'sample back',
+      level: 1,
+    },
+  ],
 });
 
 const getCalendar = async (): Promise<Response<GetCalendarResponse>> => ({
   status: 200,
   body: {
-    calendar: [],
+    calendar: [[1, 2, 3]],
     cyclePosition: 1,
   },
 });

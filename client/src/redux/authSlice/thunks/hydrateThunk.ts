@@ -4,7 +4,8 @@ import AuthState from '../authState';
 
 export const hydrateAuth = createAsyncThunk('auth/hydrate', async () => {
   const user: CognitoUser = await Auth.currentAuthenticatedUser();
-  console.log(user);
+  const token = (user as any).signInUserSession.idToken.jwtToken;
+  console.log(token);
   return user.getUsername();
 });
 

@@ -2,6 +2,7 @@
   "name": "template-repo",
   "version": "1.0.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@aws-amplify/auth": "^3.4.29",
     "@hookform/resolvers": "1.0.0",
