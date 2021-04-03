@@ -37,19 +37,27 @@ const AddCard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { handleSubmit, reset } = formMethods;
 
-  const submitHandler = ({ frontText, backText }: AddCardFields) => {
+  const submitHandler = async ({ frontText, backText }: AddCardFields) => {
     setLoading(true);
-    const res = dispatch(
+    const res = await dispatch(
       addCard({
         frontText,
         backText,
       })
     );
-    toast('Card Created successfully!', {
-      type: 'success',
-      position: 'bottom-center',
-    });
-    reset();
+    if (addCard.fulfilled.match(res)) {
+      toast('Card Created successfully!', {
+        type: 'success',
+        position: 'bottom-center',
+      });
+      reset();
+    } else {
+      toast('An error occurred', {
+        type: 'error',
+        position: 'bottom-center',
+      });
+    }
+
     setLoading(false);
   };
 

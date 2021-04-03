@@ -60,11 +60,11 @@ const CardList: React.FC = () => {
               <tbody>
                 {cardState.cards.map((c, i) => (
                   <tr key={i}>
-                    <td>{c.frontText}</td>
-                    <td>{c.backText}</td>
-                    <td>{c.level}</td>
+                    <td>{c.FrontText}</td>
+                    <td>{c.BackText}</td>
+                    <td>{c.Level}</td>
                     <td>
-                      <Button size={'sm'} variant={'link'} onClick={() => deleteCard(c.cardId)}>
+                      <Button size={'sm'} variant={'link'} onClick={() => deleteCard(c.CardId)}>
                         delete me
                       </Button>
                     </td>

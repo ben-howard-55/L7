@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import client, { Card } from '../../../api/client';
-import state from '../appState';
+import state from '../AppState';
 
 interface addCardProps {
   frontText: string;

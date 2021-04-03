@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import AppState from './appState';
+import AppState from './AppState';
 import { addCardThunkReducers } from './thunks/addCard';
 import { fetchCalendarDataThunkReducers } from './thunks/fetchCalendarData';
 import { fetchAllCardsThunkReducers } from './thunks/fetchAllCards';

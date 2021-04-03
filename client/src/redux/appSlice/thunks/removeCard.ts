@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../../../api/client';
-import state from '../appState';
+import state from '../AppState';
 
 interface removeCardProps {
   cardId: string;
@@ -22,7 +22,7 @@ export const removeCard = createAsyncThunk<void, removeCardProps>(
 
 export const removeCardThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
   builder.addCase(removeCard.fulfilled, (state, { payload, meta }) => {
-    state.cards = state.cards.filter((c) => c.cardId !== meta.arg.cardId);
+    state.cards = state.cards.filter((c) => c.CardId !== meta.arg.cardId);
   });
 
   builder.addCase(removeCard.rejected, (state, { payload }) => {});

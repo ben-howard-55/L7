@@ -1,28 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import Centered from '../components/Layout/Centered';
 import Graph from '../components/Graph';
 import Header from '../components/Header';
+import Centered from '../components/Layout/Centered';
+import useHydrator from '../hooks/useHydrator';
 import { fetchCalendarData } from '../redux/appSlice/thunks/fetchCalendarData';
-import { RootState, useAppDispatch } from '../redux/store';
+import { fetchGameData } from '../redux/gameSlice/thunks/fetchGameData';
+import { RootState } from '../redux/store';
 
 const Dashboard: React.FC = () => {
+  useHydrator((state) => state.app.hydratedCalendar, fetchCalendarData);
+  useHydrator((state) => state.game.hydratedGameState, fetchGameData);
   const selector = (state: RootState) => ({
     calendar: state.app.calendar,
     cyclePosition: state.app.cyclePosition,
-    hydrated: state.app.hydratedCalendar,
+    numCards: state.game.practiceList.length,
   });
-  const dispatch = useAppDispatch();
+
   const appState = useSelector(selector);
   const history = useHistory();
-
-  useEffect(() => {
-    if (appState.hydrated === false) {
-      dispatch(fetchCalendarData());
-    }
-  }, [dispatch]);
 
   return (
     <Container fluid>
@@ -35,12 +33,16 @@ const Dashboard: React.FC = () => {
             </Col>
           </Row>
           <Row className={'mt-4'}>
-            <Col className={'text-center'}>60 Questions to answer today</Col>
+            <Col className={'text-center'}>
+              {appState.numCards > 0
+                ? `${appState.numCards} Questions to answer today`
+                : `✨Youve answered all your questions for today! 🎉✨`}
+            </Col>
           </Row>
           <Row className={'mt-4'}>
             <Col xs={{ span: 12 }} md={{ span: 6, offset: 3 }}>
               <Centered>
-                <Button size={'lg'} block>
+                <Button size={'lg'} block disabled={appState.numCards === 0}>
                   Revise Now
                 </Button>
               </Centered>

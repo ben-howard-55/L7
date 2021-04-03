@@ -3,6 +3,7 @@ type AuthState = {
   isConfirmed?: boolean;
   isHydrated: boolean;
   user?: string;
+  token?: string;
 };
 
 export default AuthState;

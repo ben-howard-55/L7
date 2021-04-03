@@ -1,12 +1,15 @@
 import Auth, { CognitoUser } from '@aws-amplify/auth';
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import AuthState from '../authState';
+import AuthState from '../AuthState';
 
 export const hydrateAuth = createAsyncThunk('auth/hydrate', async () => {
   const user: CognitoUser = await Auth.currentAuthenticatedUser();
   const token = (user as any).signInUserSession.idToken.jwtToken;
   console.log(token);
-  return user.getUsername();
+  return {
+    username: user.getUsername(),
+    token,
+  };
 });
 
 export const hydrateAuthReducers = (builder: ActionReducerMapBuilder<AuthState>) => {
@@ -14,7 +17,8 @@ export const hydrateAuthReducers = (builder: ActionReducerMapBuilder<AuthState>)
     state.isHydrated = true;
     state.isAuthenticated = true;
     state.isConfirmed = true;
-    state.user = payload;
+    state.user = payload.username;
+    state.token = payload.token;
   });
   builder.addCase(hydrateAuth.rejected, (state, action) => {
     state.isHydrated = true;

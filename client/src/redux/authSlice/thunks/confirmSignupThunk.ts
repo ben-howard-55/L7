@@ -1,6 +1,6 @@
 import Auth from '@aws-amplify/auth';
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import state from '../authState';
+import state from '../AuthState';
 
 interface confirmSignupThunkInterface {
   username: string;
