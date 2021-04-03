@@ -20,6 +20,29 @@ const Dynamo = {
         console.log(data);
 
         return data.Item;
+    },
+
+    async write (UserID, CardID, data, TableName) {
+        const params = {
+            TableName,
+            Item: {
+                UserID: UserID,
+                CardID: CardID,
+                FrontText: data.FrontText,
+                BackText: data.BackText,
+                Level: 1,
+                CycleLastSeen: 0
+            }
+        }
+        
+        const res = await documentClient.put(params).promise();
+
+        if (!res) {
+            return null;
+        }
+        console.log(res);
+
+        return params.Item;
     }
 };
 

@@ -84,6 +84,17 @@ functions:
               type: COGNITO_USER_POOLS
               authorizerId:
                 Ref: apiAuthorizer
+  addCard:
+    handler: lambdas/endpoints/addCard.handler
+    events:
+        - http:
+            path: add-card
+            method: POST
+            cors: true
+            authorizer:
+              type: COGNITO_USER_POOLS
+              authorizerId:
+                Ref: apiAuthorizer
   # package:
   #   patterns:
   #     - lambdas/common/*
