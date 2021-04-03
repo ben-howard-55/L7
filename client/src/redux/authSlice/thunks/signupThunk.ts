@@ -3,6 +3,7 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import state from '../authState';
 
 interface signupThunkInterface {
+  username: string;
   email: string;
   password: string;
 }
@@ -16,9 +17,9 @@ interface result {
 
 export const signup = createAsyncThunk<result, signupThunkInterface>(
   'auth/signup',
-  async ({ email, password }) =>
+  async ({ username, email, password }) =>
     await Auth.signUp({
-      username: email,
+      username,
       password,
       attributes: {
         email,

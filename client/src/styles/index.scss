@@ -1,6 +1,9 @@
 /* import only the necessary Bootstrap files */
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+/*--------Imported modules-------------*/
+@import '~react-toastify/dist/ReactToastify.css';
+
 /* -------begin customization-------- */
 @import './components/appContainer.scss';
 /* -------end customization-------- */

@@ -5,17 +5,19 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { object, ref, SchemaOf, string } from 'yup';
 import Centered from '../../components/Centered';
-import TextField from '../../components/TextField';
+import TextField from '../../components/Form/TextField';
 import { signup } from '../../redux/authSlice/thunks/signupThunk';
 import { useAppDispatch } from '../../redux/store';
 
 interface SignupFields {
+  username: string;
   email: string;
   password: string;
   repeatPassword: string;
 }
 
 const field = {
+  username: 'username',
   email: 'email',
   password: 'password',
   repeatPassword: 'repeatPassword',
@@ -25,6 +27,7 @@ const passwordValidationMsg =
   'Password must be at least 8 characters, and include at least 1 uppercase character and 1 number';
 
 const schema: SchemaOf<SignupFields> = object().shape({
+  username: string().required('Please select a username'),
   email: string().required('Please enter an email'),
   password: string()
     .required('Please enter a password')
@@ -44,10 +47,11 @@ const Signup: React.FC = () => {
 
   const { handleSubmit } = formMethods;
 
-  const submitHandler = async ({ email, password }: SignupFields) => {
+  const submitHandler = async ({ username, email, password }: SignupFields) => {
     setLoading(true);
     await dispatch(
       signup({
+        username,
         email,
         password,
       })
@@ -63,6 +67,14 @@ const Signup: React.FC = () => {
           <Card.Header>Create an Account</Card.Header>
           <Card.Body>
             <Form onSubmit={handleSubmit(submitHandler)}>
+              <TextField
+                name={field.username}
+                type={'text'}
+                label={'Username'}
+                methods={formMethods}
+                required
+                disabled={loading}
+              />
               <TextField
                 name={field.email}
                 type={'email'}

@@ -9,17 +9,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { object, SchemaOf, string } from 'yup';
 
 interface LoginFields {
-  email: string;
+  username: string;
   password: string;
 }
 
 const field = {
-  email: 'email',
+  username: 'username',
   password: 'password',
 };
 
 const schema: SchemaOf<LoginFields> = object().shape({
-  email: string().required('Please enter an email'),
+  username: string().required('Please enter an email'),
   password: string().required('Please enter a password'),
 });
 
@@ -31,12 +31,12 @@ const Login: React.FC = () => {
   });
   const dispatch = useAppDispatch();
 
-  const submitHandler = async ({ email, password }: LoginFields) => {
+  const submitHandler = async ({ username, password }: LoginFields) => {
     setLoading(true);
     setError('');
     const res = await dispatch(
       login({
-        username: email,
+        username,
         password,
       })
     );
@@ -56,12 +56,12 @@ const Login: React.FC = () => {
           <Card.Body>
             <Form onSubmit={handleSubmit(submitHandler)}>
               <Form.Group>
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Username</Form.Label>
                 <Form.Control
-                  isInvalid={Boolean(errors.email)}
-                  type={'email'}
+                  isInvalid={Boolean(errors.username)}
+                  type={'text'}
                   disabled={loading}
-                  name={field.email}
+                  name={field.username}
                   ref={register}
                 />
               </Form.Group>
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
                 />
               </Form.Group>
               <p className={'text-danger'}>
-                {errors.email?.message || errors.password?.message || error}
+                {errors.username?.message || errors.password?.message || error}
               </p>
               <Form.Group>
                 <Button type={'submit'} disabled={loading} block>

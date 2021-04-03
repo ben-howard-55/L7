@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { object, SchemaOf, string } from 'yup';
 import Centered from '../../components/Centered';
-import TextField from '../../components/TextField';
+import TextField from '../../components/Form/TextField';
 import { confirmSignup } from '../../redux/authSlice/thunks/confirmSignupThunk';
 import { RootState, useAppDispatch } from '../../redux/store';
 
