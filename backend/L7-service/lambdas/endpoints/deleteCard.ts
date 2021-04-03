@@ -23,11 +23,12 @@ export const handler: APIGatewayProxyHandler = async event => {
 
     let CardId = event.pathParameters.ID;
 
-    const req = await Dynamo.get(UserId, CardId, tableName);
+    const req = await Dynamo.delete(UserId, CardId, tableName);
 
     if (!req) {
-        return Responses._400({message: 'Failed to get Card by CardID', user: UserId, card: CardId});
+        return Responses._400({message: 'Failed to delete Card'});
     }
 
-    return Responses._200({req});
+    // return CardID
+    return Responses._200(CardId);
 }

@@ -1,5 +1,4 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { v4 as uuidv4 } from 'uuid';
 const AWS = require('aws-sdk');
 import Responses from '../common/API_Responses';
 import Dynamo from '../common/Dynamo';
@@ -17,24 +16,14 @@ export const handler: APIGatewayProxyHandler = async event => {
         return Responses._401({message: 'user unauthorized'});
     }
 
-    // get random id
-    let CardId = uuidv4();
-
-    const cardData = JSON.parse(event.body);
-
-    if (!cardData.FrontText || !cardData.BackText) {
-        return Responses._400({message: 'no Front or Back Text'});
-    }
-
-    // write data to dynamoDB table
-    const req = await Dynamo.write(UserId, CardId, cardData, tableName);
+    const req = await Dynamo.query(UserId, tableName);
 
     if (!req) {
-        return Responses._400({message: 'Failed to write new Card'});
+        return Responses._400({message: 'Failed to find Cards'});
     }
+    
+    // immutably remove properties from an array of objects
+    const newArr = req.map(({UserID, ...rest}) => rest);
 
-    // remove UserID
-    delete req.UserID;
-
-    return Responses._201(req);
+    return Responses._200(newArr);
 }

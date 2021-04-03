@@ -73,28 +73,39 @@ custom:
   tableName: L7-CC
 
 functions:
-  getCard:
-    handler: lambdas/endpoints/getCard.handler
-    events:
-        - http:
-            path: get-card/{ID}
-            method: GET
-            cors: true
-            authorizer:
-              type: COGNITO_USER_POOLS
-              authorizerId:
-                Ref: apiAuthorizer
   addCard:
     handler: lambdas/endpoints/addCard.handler
     events:
-        - http:
-            path: add-card
-            method: POST
-            cors: true
-            authorizer:
-              type: COGNITO_USER_POOLS
-              authorizerId:
-                Ref: apiAuthorizer
+      - http:
+          path: add-card
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  getAllCards:
+    handler: lambdas/endpoints/getAllCards.handler
+    events:
+      - http:
+          path: get-all-cards
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  deleteCard:
+    handler: lambdas/endpoints/deleteCard.handler
+    events:
+      - http:
+          path: delete-card/{ID}
+          method: DELETE
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
   # package:
   #   patterns:
   #     - lambdas/common/*
