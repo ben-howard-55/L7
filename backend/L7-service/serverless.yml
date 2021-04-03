@@ -26,6 +26,13 @@ provider:
   profile: serverlessUser
   lambdaHashingVersion: 20201221
   region: ap-southeast-2
+  environment:
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+          - dynamodb:*
+      Resource: '*'
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -55,9 +62,12 @@ provider:
 #    - include-me.js
 #    - include-me-dir/**
 
+custom:
+  tableName: L7-Cards
+
 functions:
   getCard:
-    handler: lambdas/getCard.handler
+    handler: lambdas/endpoints/getCard.handler
     events:
         - http:
             path: get-card/{ID}
@@ -114,3 +124,17 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    L7DynamoDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: CardID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: CardID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
