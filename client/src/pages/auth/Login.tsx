@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import Centered from '../../components/Centered';
+import Centered from '../../components/Layout/Centered';
 import { login } from '../../redux/authSlice/thunks/loginThunk';
 import { useAppDispatch } from '../../redux/store';
 import { yupResolver } from '@hookform/resolvers/yup';

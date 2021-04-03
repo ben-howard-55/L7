@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import AppContainer from './components/AppContainer';
+import AppContainer from './components/Layout/AppContainer';
 import AuthRouter from './pages/auth/AuthWrapper';
 import Dashboard from './pages/Dashboard';
 import AddCard from './pages/card/AddCard';

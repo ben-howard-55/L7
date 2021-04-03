@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { object, SchemaOf, string } from 'yup';
-import Centered from '../../components/Centered';
+import Centered from '../../components/Layout/Centered';
 import TextField from '../../components/Form/TextField';
 import { confirmSignup } from '../../redux/authSlice/thunks/confirmSignupThunk';
 import { RootState, useAppDispatch } from '../../redux/store';

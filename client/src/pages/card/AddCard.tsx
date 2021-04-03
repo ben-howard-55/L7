@@ -4,7 +4,7 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { object, string } from 'yup';
 import { SchemaOf } from 'yup';
-import Centered from '../../components/Centered';
+import Centered from '../../components/Layout/Centered';
 import Header from '../../components/Header';
 import TextField from '../../components/Form/TextField';
 import TextArea from '../../components/Form/TextArea';

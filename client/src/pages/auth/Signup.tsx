@@ -4,7 +4,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { object, ref, SchemaOf, string } from 'yup';
-import Centered from '../../components/Centered';
+import Centered from '../../components/Layout/Centered';
 import TextField from '../../components/Form/TextField';
 import { signup } from '../../redux/authSlice/thunks/signupThunk';
 import { useAppDispatch } from '../../redux/store';

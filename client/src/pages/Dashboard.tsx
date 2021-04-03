@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import Centered from '../components/Centered';
+import Centered from '../components/Layout/Centered';
 import Graph from '../components/Graph';
 import Header from '../components/Header';
 import { fetchCalendarData } from '../redux/appSlice/thunks/fetchCalendarData';

@@ -1,5 +1,5 @@
 import { Calendar } from '../api/client';
-import Centered from './Centered';
+import Centered from './Layout/Centered';
 
 interface GraphProps {
   calendar?: Calendar;
