@@ -15,7 +15,14 @@ export const login = createAsyncThunk<CognitoUser, loginThunkInterface>(
 export const loginThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
   builder.addCase(login.fulfilled, (state, { payload }) => {
     state.isAuthenticated = true;
+    state.isConfirmed = true;
   });
 
-  builder.addCase(login.rejected, (state, { payload }) => {});
+  builder.addCase(login.rejected, (state, { error, meta }) => {
+    if (error.code === 'UserNotConfirmedException') {
+      state.isAuthenticated = true;
+      state.isConfirmed = false;
+      state.user = meta.arg.username;
+    }
+  });
 };

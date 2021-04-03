@@ -11,6 +11,7 @@ export const hydrateAuthReducers = (builder: ActionReducerMapBuilder<AuthState>)
   builder.addCase(hydrateAuth.fulfilled, (state, { payload }) => {
     state.isHydrated = true;
     state.isAuthenticated = true;
+    state.isConfirmed = true;
   });
   builder.addCase(hydrateAuth.rejected, (state, action) => {
     state.isHydrated = true;
