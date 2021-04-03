@@ -63,7 +63,7 @@ provider:
 #    - include-me-dir/**
 
 custom:
-  tableName: L7-Cards
+  tableName: L7-CC
 
 functions:
   getCard:
@@ -130,11 +130,37 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.tableName}
+        BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: CardID
             AttributeType: S
+          - AttributeName: UserID
+            AttributeType: S
         KeySchema:
-          - AttributeName: CardID
+          - AttributeName: UserID
             KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
+          - AttributeName: CardID
+            KeyType: RANGE
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ${self:provider.stage}-L7-user-pool
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - Name: CyclePosition
+            AttributeDataType: Number
+            DeveloperOnlyAttribute: true
+          - Name: CycleLastUpdate
+            AttributeDataType: DateTime
+            DeveloperOnlyAttribute: true
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+          ClientName: ${self:provider.stage}-L7-user-pool-client
+          UserPoolId:
+            Ref: CognitoUserPool
+          ExplicitAuthFlows:
+            - ADMIN_NO_SRP_AUTH
+          GenerateSecret: false
 

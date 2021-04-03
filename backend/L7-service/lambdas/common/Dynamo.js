@@ -3,11 +3,12 @@ const AWS = require('aws-sdk');
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 const Dyanmo = {
-    async get (CardID, TableName) {
+    async get (userId, cardId, TableName) {
         const params = {
             TableName,
             Key: {
-                CardID
+                userId,
+                cardId
             }
         };
 
