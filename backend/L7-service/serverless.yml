@@ -106,6 +106,17 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: apiAuthorizer
+  updateLevel:
+    handler: lambdas/endpoints/updateLevel.handler
+    events:
+      - http:
+          path: update-level
+          method: PATCH
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
   # package:
   #   patterns:
   #     - lambdas/common/*

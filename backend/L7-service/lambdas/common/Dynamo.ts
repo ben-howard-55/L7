@@ -83,6 +83,54 @@ const Dynamo = {
         console.log(res);
 
         return true;
+    },
+
+    async update (UserID, CardID, Correct, TableName) {
+        let params;
+        
+        if (Correct) {
+            params = {
+                TableName,
+                Key: {
+                    CardID,
+                    UserID
+                },
+                UpdateExpression: "set #L = #L + :val",
+                ExpressionAttributeValues:{
+                    ":val": 1
+                },
+                ExpressionAttributeNames:{
+                    "#L": "Level"
+                },
+                ReturnValues: 'UPDATED_NEW'
+              }
+        } else {
+            params = {
+                TableName,
+                Key: {
+                    CardID,
+                    UserID
+                },
+                UpdateExpression: "set #L = :val",
+                ExpressionAttributeValues:{
+                    ":val": 1
+                },
+                ExpressionAttributeNames:{
+                    "#L": "Level"
+                },
+                ReturnValues: 'UPDATED_NEW'
+              }
+        }  
+
+        const res = await documentClient.update(params).promise();
+
+        // if no item to delete, return null
+        if (!res.Attributes) {
+            return null;
+        }
+        console.log(res);
+
+        return true;
     }
 };
 
