@@ -4,7 +4,7 @@ type AppState = {
   hydratedCalendar: boolean;
   calendar: Calendar;
   hydratedCards: boolean;
-  cards: Array<Card>;
+  cards: { [id: string]: Card };
   cyclePosition: number;
 };
 

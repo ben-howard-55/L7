@@ -60,7 +60,7 @@ const CardList: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {cardState.cards.map((c, i) => (
+                {Object.values(cardState.cards).map((c, i) => (
                   <tr key={i}>
                     <td>{c.FrontText}</td>
                     <td>{c.BackText}</td>

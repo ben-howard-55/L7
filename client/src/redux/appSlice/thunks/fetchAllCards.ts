@@ -25,7 +25,7 @@ export const fetchAllCards = createAsyncThunk<result, void>(
 
 export const fetchAllCardsThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
   builder.addCase(fetchAllCards.fulfilled, (state, { payload }) => {
-    state.cards = [...payload.cards, ...state.cards];
+    payload.cards.forEach((c) => (state.cards[c.CardID] = c));
     state.hydratedCards = true;
   });
 

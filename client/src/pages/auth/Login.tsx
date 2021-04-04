@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Centered from '../../components/Layout/Centered';
@@ -49,49 +49,58 @@ const Login: React.FC = () => {
 
   return (
     <Centered>
-      <div className={'pb-5'}>
-        <h1>L7</h1>
-        <Card>
-          <Card.Header>Login</Card.Header>
-          <Card.Body>
-            <Form onSubmit={handleSubmit(submitHandler)}>
-              <Form.Group>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  isInvalid={Boolean(errors.username)}
-                  type={'text'}
-                  disabled={loading}
-                  name={field.username}
-                  ref={register}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  isInvalid={Boolean(errors.password)}
-                  type={'password'}
-                  disabled={loading}
-                  name={field.password}
-                  ref={register}
-                />
-              </Form.Group>
-              <p className={'text-danger'}>
-                {errors.username?.message || errors.password?.message || error}
-              </p>
-              <Form.Group>
-                <Button type={'submit'} disabled={loading} block>
-                  Submit
-                </Button>
-              </Form.Group>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className={'text-center mt-3'}>
-          Dont have an account?
-          <br />
-          <Link to={'/signup'}>Sign up</Link>
-        </div>
-      </div>
+      <Container fluid>
+        <Row>
+          <Col xs={12} md={{ span: 4, offset: 4 }}>
+            <div className={'pb-5'}>
+              <h1>L7📈</h1>
+              <Card>
+                <Card.Header>Login</Card.Header>
+                <Card.Body>
+                  <Form onSubmit={handleSubmit(submitHandler)}>
+                    <Form.Group>
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control
+                        isInvalid={Boolean(errors.username)}
+                        type={'text'}
+                        disabled={loading}
+                        name={field.username}
+                        ref={register}
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        isInvalid={Boolean(errors.password)}
+                        type={'password'}
+                        disabled={loading}
+                        name={field.password}
+                        ref={register}
+                      />
+                    </Form.Group>
+                    <p className={'text-danger'}>
+                      {errors.username?.message || errors.password?.message || error}
+                    </p>
+                    <Form.Group>
+                      <Button type={'submit'} disabled={loading} block>
+                        Login
+                      </Button>
+                      <div className={'text-center mt-2'}>
+                        Forgot password? <Link to={'/login'}>Too bad</Link>
+                      </div>
+                    </Form.Group>
+                  </Form>
+                </Card.Body>
+              </Card>
+              <div className={'text-center mt-3'}>
+                Dont have an account?
+                <br />
+                <Link to={'/signup'}>Sign up</Link>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </Centered>
   );
 };

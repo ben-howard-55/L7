@@ -46,11 +46,8 @@ export const answerQuestionThunkReducers = (builder: ActionReducerMapBuilder<Gam
 
 export const answerQuestionThunkReducersApp = (builder: ActionReducerMapBuilder<AppState>) => {
   builder.addCase(answerQuestion.fulfilled, (state, { payload }) => {
-    const index = state.cards.findIndex((c) => c.CardID === payload.cardId);
-    if (index !== -1) {
-      state.cards[index].Level = payload.newLevel;
-      state.cards[index].CycleLastSeen = payload.cycle;
-    }
+    state.cards[payload.cardId].Level = payload.newLevel;
+    state.cards[payload.cardId].CycleLastSeen = payload.cycle;
   });
 
   builder.addCase(answerQuestion.rejected, (state, { payload }) => {});

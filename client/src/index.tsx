@@ -10,6 +10,9 @@ import './styles/index.scss';
 
 Auth.configure(authConfig);
 
+const myCanvas = document.createElement('canvas');
+document.body.appendChild(myCanvas);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

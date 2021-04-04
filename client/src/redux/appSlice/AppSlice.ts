@@ -9,7 +9,7 @@ import { answerQuestionThunkReducersApp } from '../gameSlice/thunks/answerQuesti
 const appSlice = createSlice({
   name: 'appState',
   initialState: {
-    cards: [],
+    cards: {},
     calendar: [],
     cyclePosition: 0,
     hydratedCalendar: false,

@@ -9,6 +9,7 @@ import { reveal, start } from '../../redux/gameSlice/gameSlice';
 import { answerQuestion } from '../../redux/gameSlice/thunks/answerQuestion';
 import { fetchGameData } from '../../redux/gameSlice/thunks/fetchGameData';
 import { RootState, useAppDispatch } from '../../redux/store';
+import confetti from 'canvas-confetti';
 
 const Revise: React.FC = () => {
   useHydrator((state) => state.game.hydratedGameState, fetchGameData);
@@ -29,6 +30,10 @@ const Revise: React.FC = () => {
       dispatch(start());
     }
   }, [dispatch, isReady]);
+
+  if (isReady && !card && remainingCount === 0) {
+    confetti();
+  }
 
   return (
     <Container fluid>

@@ -115,18 +115,7 @@ const deleteCard = async (cardId: string): Promise<Response<string>> =>
           status: err.status,
         } as Response<string>)
     );
-const getTodaysCards = async (): Promise<Response<Array<Card>>> => ({
-  status: 200,
-  body: [
-    {
-      CardID: 'a4e74c74-6d63-4a17-93fb-6e9e07fe0c9a',
-      FrontText: 'frontText',
-      BackText: 'some back text',
-      Level: 3,
-      CycleLastSeen: 1,
-    },
-  ],
-});
+const getTodaysCards = async (): Promise<Response<Array<Card>>> => getAllCards();
 
 const getAllCards = async (): Promise<Response<Array<Card>>> =>
   API({

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { object, ref, SchemaOf, string } from 'yup';
@@ -61,58 +61,64 @@ const Signup: React.FC = () => {
 
   return (
     <Centered>
-      <div className={'pb-5'}>
-        <h1>L7</h1>
-        <Card>
-          <Card.Header>Create an Account</Card.Header>
-          <Card.Body>
-            <Form onSubmit={handleSubmit(submitHandler)}>
-              <TextField
-                name={field.username}
-                type={'text'}
-                label={'Username'}
-                methods={formMethods}
-                required
-                disabled={loading}
-              />
-              <TextField
-                name={field.email}
-                type={'email'}
-                label={'Email Address'}
-                methods={formMethods}
-                required
-                disabled={loading}
-              />
-              <TextField
-                name={field.password}
-                type={'password'}
-                label={'Password'}
-                methods={formMethods}
-                required
-                disabled={loading}
-              />
-              <TextField
-                name={field.repeatPassword}
-                type={'password'}
-                label={'Repeat Password'}
-                methods={formMethods}
-                required
-                disabled={loading}
-              />
-              <Form.Group>
-                <Button type={'submit'} disabled={loading} block>
-                  Sign Up
-                </Button>
-              </Form.Group>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className={'text-center mt-3'}>
-          Already have an account?
-          <br />
-          <Link to={'/login'}>Login</Link>
-        </div>
-      </div>
+      <Container fluid>
+        <Row>
+          <Col xs={12} md={{ span: 4, offset: 4 }}>
+            <div className={'pb-5'}>
+              <h1>L7</h1>
+              <Card>
+                <Card.Header>Create an Account</Card.Header>
+                <Card.Body>
+                  <Form onSubmit={handleSubmit(submitHandler)}>
+                    <TextField
+                      name={field.username}
+                      type={'text'}
+                      label={'Username'}
+                      methods={formMethods}
+                      required
+                      disabled={loading}
+                    />
+                    <TextField
+                      name={field.email}
+                      type={'email'}
+                      label={'Email Address'}
+                      methods={formMethods}
+                      required
+                      disabled={loading}
+                    />
+                    <TextField
+                      name={field.password}
+                      type={'password'}
+                      label={'Password'}
+                      methods={formMethods}
+                      required
+                      disabled={loading}
+                    />
+                    <TextField
+                      name={field.repeatPassword}
+                      type={'password'}
+                      label={'Repeat Password'}
+                      methods={formMethods}
+                      required
+                      disabled={loading}
+                    />
+                    <Form.Group>
+                      <Button type={'submit'} disabled={loading} block>
+                        Sign Up
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </Card.Body>
+              </Card>
+              <div className={'text-center mt-3'}>
+                Already have an account?
+                <br />
+                <Link to={'/login'}>Login</Link>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </Centered>
   );
 };

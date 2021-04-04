@@ -22,7 +22,7 @@ export const removeCard = createAsyncThunk<void, removeCardProps>(
 
 export const removeCardThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
   builder.addCase(removeCard.fulfilled, (state, { payload, meta }) => {
-    state.cards = state.cards.filter((c) => c.CardID !== meta.arg.cardId);
+    delete state.cards[meta.arg.cardId];
   });
 
   builder.addCase(removeCard.rejected, (state, { payload }) => {});
