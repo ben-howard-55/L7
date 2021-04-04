@@ -1,8 +1,10 @@
 import Auth, { CognitoUser } from '@aws-amplify/auth';
 import axios, { AxiosRequestConfig } from 'axios';
+import { logout } from '../redux/authSlice/thunks/logoutThunk';
+import store from '../redux/store';
 
 export interface Card {
-  CardId: string;
+  CardID: string;
   FrontText: string;
   BackText: string;
   Level: number;
@@ -21,6 +23,12 @@ export interface GetCalendarResponse {
   cyclePosition: number;
 }
 
+export interface updateLevelResponse {
+  CardID: string;
+  Level: number;
+  CycleLastSeen: number;
+}
+
 const API = async (config: AxiosRequestConfig) => {
   const user: CognitoUser = await Auth.currentAuthenticatedUser();
   const token = (user as any).signInUserSession.idToken.jwtToken;
@@ -31,6 +39,12 @@ const API = async (config: AxiosRequestConfig) => {
       authorization: token,
     },
     ...config,
+  }).catch((err) => {
+    if (err.response.status === 401) {
+      // If token has expired, log the user out
+      store.dispatch(logout());
+    }
+    return err;
   });
 };
 
@@ -57,21 +71,55 @@ const addCard = async (frontText: string, backText: string): Promise<Response<Ca
         } as Response<Card>)
     );
 
-const updateLevel = async (cardId: string): Promise<Response<number>> => ({
-  status: 200,
-  body: 1,
-});
+const updateLevel = async (
+  cardId: string,
+  correct: boolean
+): Promise<Response<updateLevelResponse>> =>
+  API({
+    url: `/update-level`,
+    method: 'PATCH',
+    data: {
+      CardID: cardId,
+      Correct: correct,
+    },
+  })
+    .then(
+      (res) =>
+        ({
+          status: res.status,
+          body: res.data,
+        } as Response<updateLevelResponse>)
+    )
+    .catch(
+      (err) =>
+        ({
+          status: err.status,
+        } as Response<updateLevelResponse>)
+    );
 
-const deleteCard = async (cardId: string): Promise<Response<undefined>> => ({
-  status: 301,
-  body: undefined,
-});
-
+const deleteCard = async (cardId: string): Promise<Response<string>> =>
+  API({
+    url: `/delete-card/${cardId}`,
+    method: 'DELETE',
+  })
+    .then(
+      (res) =>
+        ({
+          status: res.status,
+          body: res.data,
+        } as Response<string>)
+    )
+    .catch(
+      (err) =>
+        ({
+          status: err.status,
+        } as Response<string>)
+    );
 const getTodaysCards = async (): Promise<Response<Array<Card>>> => ({
   status: 200,
   body: [
     {
-      CardId: 'somethin',
+      CardID: 'a4e74c74-6d63-4a17-93fb-6e9e07fe0c9a',
       FrontText: 'frontText',
       BackText: 'some back text',
       Level: 3,
@@ -83,7 +131,7 @@ const getTodaysCards = async (): Promise<Response<Array<Card>>> => ({
 const getAllCards = async (): Promise<Response<Array<Card>>> =>
   API({
     url: '/get-all-cards',
-    method: 'GET',
+    method: 'POST',
   })
     .then(
       (res) =>
@@ -102,7 +150,72 @@ const getAllCards = async (): Promise<Response<Array<Card>>> =>
 const getCalendar = async (): Promise<Response<GetCalendarResponse>> => ({
   status: 200,
   body: {
-    calendar: [[1, 2, 3], [1], [1, 2]],
+    calendar: [
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 4],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 5],
+      [1, 2, 4],
+      [1, 3],
+      [1, 2],
+      [1],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 4],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 6],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 5],
+      [1, 2, 4],
+      [1, 3],
+      [1, 2],
+      [1],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 4],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 5],
+      [1, 2, 4],
+      [1, 3],
+      [1, 2],
+      [1],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 4],
+      [1, 2],
+      [1, 3],
+      [1, 2],
+      [1, 7],
+      [1, 2],
+      [1, 3],
+      [1, 2, 6],
+      [1, 5],
+      [1, 2, 4],
+      [1, 3],
+      [1, 2],
+      [1],
+    ],
     cyclePosition: 1,
   },
 });

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ const CardList: React.FC = () => {
   const history = useHistory();
 
   const deleteCard = async (cardId: string) => {
+    console.log(`Deleting id ${cardId}`);
     const res = await dispatch(removeCard({ cardId }));
     if (removeCard.fulfilled.match(res)) {
       toast('Card Deleted successfully!', {
@@ -36,18 +37,19 @@ const CardList: React.FC = () => {
   return (
     <Container fluid>
       <Header />
-      <Row>
-        <Col xs={'auto'}>
-          <h1>Cards</h1>
-        </Col>
-        <Col>
-          <Button onClick={() => history.push('cards/add')}>Add Card</Button>
-        </Col>
-      </Row>
-
-      <Container fluid>
-        <Row>
-          <Col>
+      <Container>
+        <Card>
+          <Card.Header>
+            <Row>
+              <Col xs={'auto'}>
+                <h1>Cards</h1>
+              </Col>
+              <Col>
+                <Button onClick={() => history.push('cards/add')}>Add Card</Button>
+              </Col>
+            </Row>
+          </Card.Header>
+          <Card.Body>
             <Table>
               <thead>
                 <tr>
@@ -64,7 +66,7 @@ const CardList: React.FC = () => {
                     <td>{c.BackText}</td>
                     <td>{c.Level}</td>
                     <td>
-                      <Button size={'sm'} variant={'link'} onClick={() => deleteCard(c.CardId)}>
+                      <Button size={'sm'} variant={'link'} onClick={() => deleteCard(c.CardID)}>
                         delete me
                       </Button>
                     </td>
@@ -72,8 +74,8 @@ const CardList: React.FC = () => {
                 ))}
               </tbody>
             </Table>
-          </Col>
-        </Row>
+          </Card.Body>
+        </Card>
       </Container>
     </Container>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -13,6 +13,7 @@ import { RootState } from '../redux/store';
 const Dashboard: React.FC = () => {
   useHydrator((state) => state.app.hydratedCalendar, fetchCalendarData);
   useHydrator((state) => state.game.hydratedGameState, fetchGameData);
+
   const selector = (state: RootState) => ({
     calendar: state.app.calendar,
     cyclePosition: state.app.cyclePosition,
@@ -29,7 +30,7 @@ const Dashboard: React.FC = () => {
         <Container fluid className={'mb-5'}>
           <Row>
             <Col xs={12}>
-              <Graph calendar={appState.calendar} />
+              <Graph calendar={appState.calendar} position={appState.cyclePosition} />
             </Col>
           </Row>
           <Row className={'mt-4'}>
@@ -42,7 +43,12 @@ const Dashboard: React.FC = () => {
           <Row className={'mt-4'}>
             <Col xs={{ span: 12 }} md={{ span: 6, offset: 3 }}>
               <Centered>
-                <Button size={'lg'} block disabled={appState.numCards === 0}>
+                <Button
+                  size={'lg'}
+                  onClick={() => history.push('/revise')}
+                  block
+                  disabled={appState.numCards === 0}
+                >
                   Revise Now
                 </Button>
               </Centered>

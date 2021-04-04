@@ -4,6 +4,7 @@ import { addCardThunkReducers } from './thunks/addCard';
 import { fetchCalendarDataThunkReducers } from './thunks/fetchCalendarData';
 import { fetchAllCardsThunkReducers } from './thunks/fetchAllCards';
 import { removeCardThunkReducers } from './thunks/removeCard';
+import { answerQuestionThunkReducersApp } from '../gameSlice/thunks/answerQuestion';
 
 const appSlice = createSlice({
   name: 'appState',
@@ -20,6 +21,7 @@ const appSlice = createSlice({
     addCardThunkReducers(builder);
     removeCardThunkReducers(builder);
     fetchAllCardsThunkReducers(builder);
+    answerQuestionThunkReducersApp(builder);
   },
 });
 

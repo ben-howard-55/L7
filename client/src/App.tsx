@@ -5,6 +5,7 @@ import AuthRouter from './pages/auth/AuthWrapper';
 import Dashboard from './pages/Dashboard';
 import AddCard from './pages/card/AddCard';
 import CardList from './pages/card/CardList';
+import Revise from './pages/game/Revise';
 
 const App = () => (
   <AppContainer>
@@ -13,6 +14,7 @@ const App = () => (
         <Route path={'/dashboard'} component={Dashboard} exact />
         <Route path={'/cards'} component={CardList} exact />
         <Route path={'/cards/add'} component={AddCard} exact />
+        <Route path={'/revise'} component={Revise} exact />
         <Redirect from={'/*'} to={'/dashboard'} />
       </Switch>
     </AuthRouter>

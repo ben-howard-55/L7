@@ -12,7 +12,7 @@ export const removeCard = createAsyncThunk<void, removeCardProps>(
     new Promise(async (resolve, reject) => {
       const res = await client.deleteCard(cardId);
 
-      if (res.status === 301) {
+      if (res.status === 200) {
         resolve();
       } else {
         reject();
@@ -22,7 +22,7 @@ export const removeCard = createAsyncThunk<void, removeCardProps>(
 
 export const removeCardThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
   builder.addCase(removeCard.fulfilled, (state, { payload, meta }) => {
-    state.cards = state.cards.filter((c) => c.CardId !== meta.arg.cardId);
+    state.cards = state.cards.filter((c) => c.CardID !== meta.arg.cardId);
   });
 
   builder.addCase(removeCard.rejected, (state, { payload }) => {});

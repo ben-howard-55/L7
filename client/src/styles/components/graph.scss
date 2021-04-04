@@ -1,0 +1,37 @@
+$graph-levels: (
+  1: $blue,
+  2: $cyan,
+  3: $green,
+  4: $yellow,
+  5: $orange,
+  6: $red,
+  7: $purple,
+) !default;
+
+$graph-dot-size: 10px !default;
+$graph-dot-border-radius: 50% !default;
+$graph-gutter: 4px !default;
+
+.graph {
+  display: grid;
+  gap: $graph-gutter $graph-gutter;
+  grid-template-rows: repeat(7, $graph-dot-size);
+}
+
+.graph .dot {
+  width: $graph-dot-size;
+  height: $graph-dot-size;
+  border-radius: $graph-dot-border-radius;
+  @each $level, $hex in $graph-levels {
+    &-#{$level} {
+      background: $hex;
+      grid-row-start: 8 - $level;
+    }
+  }
+  @each $level, $hex in $graph-levels {
+    &-#{$level}-past {
+      background: $gray-500;
+      grid-row-start: 8 - $level;
+    }
+  }
+}

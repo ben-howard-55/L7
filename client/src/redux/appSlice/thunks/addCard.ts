@@ -1,5 +1,7 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 import client, { Card } from '../../../api/client';
+import GameState from '../../gameSlice/GameState';
+import AppState from '../AppState';
 import state from '../AppState';
 
 interface addCardProps {
@@ -21,9 +23,17 @@ export const addCard = createAsyncThunk<Card, addCardProps>(
     })
 );
 
-export const addCardThunkReducers = (builder: ActionReducerMapBuilder<state>) => {
+export const addCardThunkReducers = (builder: ActionReducerMapBuilder<AppState>) => {
   builder.addCase(addCard.fulfilled, (state, { payload }) => {
     state.cards = [...state.cards, payload];
+  });
+
+  builder.addCase(addCard.rejected, (state, { payload }) => {});
+};
+
+export const addCardThunkReducersGame = (builder: ActionReducerMapBuilder<GameState>) => {
+  builder.addCase(addCard.fulfilled, (state, { payload }) => {
+    state.practiceList.push(payload);
   });
 
   builder.addCase(addCard.rejected, (state, { payload }) => {});

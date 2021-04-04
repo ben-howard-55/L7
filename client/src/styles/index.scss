@@ -5,6 +5,9 @@
 @import '~react-toastify/dist/ReactToastify.css';
 
 /* -------begin customization-------- */
+@import './variables.scss';
+
 @import './components/appContainer.scss';
+@import './components/graph.scss';
 /* -------end customization-------- */
 @import '~bootstrap';
