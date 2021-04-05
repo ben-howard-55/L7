@@ -150,9 +150,10 @@ const Dynamo = {
         }
         console.log(res);
 
-        return true;
+        return res.Attributes;
+            
     }
-};
+}
 
 
 export default Dynamo;
