@@ -34,7 +34,7 @@ const API = async (config: AxiosRequestConfig) => {
   const token = (user as any).signInUserSession.idToken.jwtToken;
 
   return axios({
-    baseURL: 'https://rn5fvsuky3.execute-api.ap-southeast-2.amazonaws.com/dev/',
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
       authorization: token,
     },

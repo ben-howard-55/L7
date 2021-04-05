@@ -23,8 +23,8 @@ export const signup = createAsyncThunk<result, signupThunkInterface>(
       password,
       attributes: {
         email,
-        'dev:custom:CyclePosition': 0,
-        'dev:custom:CycleLastUpdate': 0,
+        'custom:CyclePosition': '0',
+        'custom:CycleLastUpdate': '1900-01-01 00:00:00 NZT',
       },
     })
 );
