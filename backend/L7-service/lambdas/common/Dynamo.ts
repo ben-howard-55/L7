@@ -64,6 +64,25 @@ const Dynamo = {
         return res.Items;
     },
 
+    async queryTodays (UserID, number, TableName) {
+        const params = {
+            ExpressionAttributeValues: {
+              ":u": `${UserID}`,
+            },
+            KeyConditionExpression: "UserID = :u",
+            TableName: TableName,
+          }
+
+        const res = await documentClient.query(params).promise();
+
+        if (!res) {
+            return null;
+        }
+        console.log(res);
+
+        return res.Items;
+    },
+
     async delete (UserID, CardID, TableName) {
         const params = {
             TableName,
@@ -85,7 +104,7 @@ const Dynamo = {
         return true;
     },
 
-    async update (UserID, CardID, Correct, TableName) {
+    async update (UserID, CardID, Correct, cycleNum, TableName) {
         let params;
         
         if (Correct) {
@@ -95,9 +114,10 @@ const Dynamo = {
                     CardID,
                     UserID
                 },
-                UpdateExpression: "set #L = #L + :val",
+                UpdateExpression: "set #L = #L + :val, CycleLastSeen = :cNum",
                 ExpressionAttributeValues:{
-                    ":val": 1
+                    ":val": 1,
+                    ":cNum": cycleNum
                 },
                 ExpressionAttributeNames:{
                     "#L": "Level"
