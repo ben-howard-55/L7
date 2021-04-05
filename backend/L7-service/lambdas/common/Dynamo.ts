@@ -64,13 +64,25 @@ const Dynamo = {
         return res.Items;
     },
 
-    async queryTodays (UserID, number, TableName) {
+    async queryTodays (UserID, number, levels, TableName) {
+        let temp = {}; 
+        levels.forEach((l,i) => {
+            temp[`:l${i}`] = l;
+        });
+
+        const query = levels.map((l, i) => `#L = :l${i}`).join(' or ');
+
         const params = {
             ExpressionAttributeValues: {
               ":u": `${UserID}`,
+              ":c": `${number}`,
+              ...temp
+            }, ExpressionAttributeNames:{
+                "#L": "Level"
             },
             KeyConditionExpression: "UserID = :u",
-            TableName: TableName,
+            FilterExpression: "not CycleLastSeen = :c and " + query,
+            TableName: TableName
           }
 
         const res = await documentClient.query(params).promise();

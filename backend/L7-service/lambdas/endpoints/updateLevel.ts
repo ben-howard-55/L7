@@ -27,7 +27,8 @@ export const handler: APIGatewayProxyHandler = async event => {
         return Responses._400({message: 'Failed to update card level'});
     }
     // add CardID onto card
-    req.CardID = cardData.CardId;
+    req.CardID = cardData.CardID;
+    console.log(req);
 
-    return Responses._201(req);
+    return Responses._200(req);
 }

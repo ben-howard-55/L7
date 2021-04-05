@@ -74,6 +74,17 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: apiAuthorizer
+  getTodaysCards:
+    handler: lambdas/endpoints/getTodaysCards.handler
+    events:
+      - http:
+          path: get-todays-cards
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
 
 resources:
   Resources:

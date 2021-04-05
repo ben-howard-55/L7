@@ -16,27 +16,17 @@ export const handler: APIGatewayProxyHandler = async event => {
     }
 
     // GET auth
-    let auth = event.headers.Authorization;
+    // let auth = event.headers.Authorization;
 
     // GET Current Cycle Position
-    const provider = new AWS.CognitoIdentityServiceProvider();
-
-    var params = {
-        AccessToken: auth,
-        UserAttributes: [
-            {
-                Name: 'custom:CyclePosition',
-                value: '1'
-            }
-        ]
-    };
-
-    const user = await provider.updateUserAttributes(params).promise();
+    let number = 0;
+    // number = event.requestContext.authorizer.claims['custom:CyclePosition'];
   
     // GET todays cycle numbers
+    let todaysLevels = [1, 2];
     
     // send a query asking for all cards that match todays requirements.
-    const req = await Dynamo.queryTodays(UserId, number, tableName);
+    const req = await Dynamo.queryTodays(UserId, number, todaysLevels, tableName);
 
     if (!req) {
         return Responses._400({message: 'Failed to find Cards'});
@@ -46,33 +36,4 @@ export const handler: APIGatewayProxyHandler = async event => {
     const newArr = req.map(({UserID, ...rest}) => rest);
 
     return Responses._200(newArr);
-}
-
-
-    const user = await provider.updateUserAttributes(params).promise();
-    console.log(user);
-
-    // const cylceAttr = user.UserAttributes.find(a => a.Name === "dev:custom:CyclePosition");
-
-    // let pos = event.request.userAttributes['custom:CyclePosition'];
-    // if (!UserId) {
-    //     // user unauthorized
-    //     return Responses._401({message: 'user unauthorized'});
-    // }
-
-    // const cardData = JSON.parse(event.body);
-
-    // if (!cardData.CardID) {
-    //     return Responses._400({message: 'not enough Information'});
-    // }
-
-    // write data to dynamoDB table
-    // const req = await Dynamo.update(UserId, cardData.CardID, cardData.Correct, tableName);
-
-    // if (!req) {
-    //     return Responses._400({message: 'Failed to update card level'});
-    // }
-    
-    // return Responses._201("Updated card level");
-    return Responses._201(JSON.stringify(user.UserAttributes));
 }
