@@ -23,6 +23,8 @@ export const signup = createAsyncThunk<result, signupThunkInterface>(
       password,
       attributes: {
         email,
+        'dev:custom:CyclePosition': 0,
+        'dev:custom:CycleLastUpdate': 0,
       },
     })
 );

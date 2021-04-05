@@ -16,6 +16,8 @@ const useHydrator = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
+  return isHydrated;
 };
 
 export default useHydrator;

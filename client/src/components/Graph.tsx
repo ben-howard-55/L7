@@ -40,7 +40,7 @@ const Graph: React.FC<GraphProps> = ({ calendar = [], position = 0 }) => {
         ))}
         {upcoming.map((d, i) =>
           d.map((n) => (
-            <div className={`dot dot-${n}`} style={{ gridColumnStart: i + length + 2 }} />
+            <div className={`dot dot-${n}-outline`} style={{ gridColumnStart: i + length + 2 }} />
           ))
         )}
       </div>

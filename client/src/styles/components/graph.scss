@@ -11,6 +11,8 @@ $graph-levels: (
 $graph-dot-size: 10px !default;
 $graph-dot-border-radius: 50% !default;
 $graph-gutter: 4px !default;
+$graph-dot-border-width: 4px !default;
+$graph-legend-box-size: 32px;
 
 .graph {
   display: grid;
@@ -31,6 +33,29 @@ $graph-gutter: 4px !default;
   @each $level, $hex in $graph-levels {
     &-#{$level}-past {
       background: $gray-500;
+      grid-row-start: 8 - $level;
+    }
+  }
+  @each $level, $hex in $graph-levels {
+    &-#{$level}-outline {
+      border-style: solid;
+      border-width: $graph-dot-border-width;
+      border-color: $hex;
+      grid-row-start: 8 - $level;
+    }
+  }
+}
+
+.graph-legend {
+  @each $level, $hex in $graph-levels {
+    &-#{$level} {
+      text-align: center;
+      width: $graph-legend-box-size;
+      height: $graph-legend-box-size;
+      line-height: $graph-legend-box-size;
+      color: white;
+      border-radius: $border-radius;
+      background: $hex;
       grid-row-start: 8 - $level;
     }
   }
