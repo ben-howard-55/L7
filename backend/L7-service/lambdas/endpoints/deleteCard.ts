@@ -1,9 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-const AWS = require('aws-sdk');
 import Responses from '../common/API_Responses';
 import Dynamo from '../common/Dynamo';
 
-// main
 const tableName = process.env.tableName;
 
 export const handler: APIGatewayProxyHandler = async event => {

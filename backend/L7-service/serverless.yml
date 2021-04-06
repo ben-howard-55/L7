@@ -96,6 +96,17 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: apiAuthorizer
+  updateCyclePosition:
+    handler: lambdas/endpoints/updateCyclePosition.handler
+    events:
+      - http:
+          path: update-cycle-position/{Day}
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
 
 resources:
   Resources:
@@ -122,6 +133,9 @@ resources:
           - email
         Schema:
           - Name: CyclePosition
+            AttributeDataType: Number
+            Mutable: true
+          - Name: DayLastUpdated
             AttributeDataType: Number
             Mutable: true
           - Name: CycleLastUpdate

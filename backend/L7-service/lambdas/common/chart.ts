@@ -1,5 +1,5 @@
-const chart = {
-    "arrays": [     
+const chart = 
+    [     
         [1, 2],
         [1, 3],
         [1, 2],
@@ -64,6 +64,5 @@ const chart = {
         [1, 3],
         [1, 2],
         [1]
-    ]
-}
+    ];
 export default chart;

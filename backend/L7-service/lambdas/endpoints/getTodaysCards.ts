@@ -1,5 +1,4 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-const AWS = require('aws-sdk');
 import Responses from '../common/API_Responses';
 import Dynamo from '../common/Dynamo';
 import chart from '../common/chart';
@@ -20,7 +19,7 @@ export const handler: APIGatewayProxyHandler = async event => {
     let number = event.requestContext.authorizer.claims['custom:CyclePosition'];
   
     // GET todays cycle numbers
-    let todaysLevels = chart.arrays[number];
+    let todaysLevels = chart[number];
     console.log(todaysLevels);
     
     // send a query asking for all cards that match todays requirements.

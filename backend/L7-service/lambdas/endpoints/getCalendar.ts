@@ -14,10 +14,12 @@ export const handler: APIGatewayProxyHandler = async event => {
 
     const currentCycle = event.requestContext.authorizer.claims['custom:CyclePosition'];
 
+    var cyc = parseInt(currentCycle);
+
     if (!currentCycle) {
         // can't find current cycle pos
         return Responses._400({message: 'couldn\'t get cycle position'});
     }
 
-    return Responses._200({Chart: chart, CurrentCyclePos: currentCycle});
+    return Responses._200({Chart: chart, CurrentCyclePos: cyc});
 }
