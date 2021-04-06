@@ -1,7 +1,6 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
-import client, { Card } from '../../../api/client';
+import client from '../../../api/client';
 import AppState from '../../appSlice/AppState';
-import state from '../GameState';
 
 export const finishGame = createAsyncThunk<number, void>(
   'game/finishGame',

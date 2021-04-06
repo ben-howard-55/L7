@@ -29,12 +29,15 @@ const Revise: React.FC = () => {
   useEffect(() => {
     if (isReady) {
       dispatch(start());
+      if (!card && remainingCount === 0) {
+        // finished
+        dispatch(finishGame());
+      }
     }
   }, [dispatch, isReady]);
 
   if (isReady && !card && remainingCount === 0) {
     // finished
-    dispatch(finishGame());
     confetti();
   }
 
