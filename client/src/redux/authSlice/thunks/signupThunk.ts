@@ -24,7 +24,7 @@ export const signup = createAsyncThunk<result, signupThunkInterface>(
       attributes: {
         email,
         'custom:CyclePosition': '0',
-        'custom:CycleLastUpdate': '1900-01-01 00:00:00 NZT',
+        'custom:CycleLastUpdate': '1900-01-01 00:00:00 UTC',
       },
     })
 );

@@ -16,8 +16,8 @@ export const fetchCalendarData = createAsyncThunk<result, void>(
 
       if (calendarResponse.status === 200) {
         resolve({
-          calendar: calendarResponse.body.calendar,
-          cyclePosition: calendarResponse.body.cyclePosition,
+          calendar: calendarResponse.body.Chart,
+          cyclePosition: calendarResponse.body.CurrentCyclePos,
         });
       } else {
         reject();

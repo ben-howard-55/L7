@@ -10,7 +10,6 @@ const length = 20;
 
 const Graph: React.FC<GraphProps> = ({ calendar = [], position = 0 }) => {
   const calendarLength = calendar.length;
-  console.log(`Length: ${calendarLength}`);
   if (calendarLength === 0) {
     return <p>....</p>;
   }
@@ -33,14 +32,24 @@ const Graph: React.FC<GraphProps> = ({ calendar = [], position = 0 }) => {
     <Centered>
       <div className={'graph'}>
         {previous.map((d, i) =>
-          d.map((n) => <div className={`dot dot-${n}-past`} style={{ gridColumnStart: i + 1 }} />)
+          d.map((n, j) => (
+            <div
+              key={`${i - j}`}
+              className={`dot dot-${n}-past`}
+              style={{ gridColumnStart: i + 1 }}
+            />
+          ))
         )}
-        {today.map((n) => (
-          <div className={`dot dot-${n}`} style={{ gridColumnStart: length + 1 }} />
+        {today.map((n, i) => (
+          <div className={`dot dot-${n}`} key={i} style={{ gridColumnStart: length + 1 }} />
         ))}
         {upcoming.map((d, i) =>
-          d.map((n) => (
-            <div className={`dot dot-${n}-outline`} style={{ gridColumnStart: i + length + 2 }} />
+          d.map((n, j) => (
+            <div
+              key={`${i - j}`}
+              className={`dot dot-${n}-outline`}
+              style={{ gridColumnStart: i + length + 2 }}
+            />
           ))
         )}
       </div>

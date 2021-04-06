@@ -19,8 +19,8 @@ export interface Response<T> {
 }
 
 export interface GetCalendarResponse {
-  calendar: Calendar;
-  cyclePosition: number;
+  Chart: Calendar;
+  CurrentCyclePos: number;
 }
 
 export interface updateLevelResponse {
@@ -115,7 +115,24 @@ const deleteCard = async (cardId: string): Promise<Response<string>> =>
           status: err.status,
         } as Response<string>)
     );
-const getTodaysCards = async (): Promise<Response<Array<Card>>> => getAllCards();
+const getTodaysCards = async (): Promise<Response<Array<Card>>> =>
+  API({
+    url: '/get-todays-cards',
+    method: 'POST',
+  })
+    .then(
+      (res) =>
+        ({
+          status: res.status,
+          body: res.data,
+        } as Response<Array<Card>>)
+    )
+    .catch(
+      (err) =>
+        ({
+          status: err.status,
+        } as Response<Array<Card>>)
+    );
 
 const getAllCards = async (): Promise<Response<Array<Card>>> =>
   API({
@@ -136,78 +153,24 @@ const getAllCards = async (): Promise<Response<Array<Card>>> =>
         } as Response<Array<Card>>)
     );
 
-const getCalendar = async (): Promise<Response<GetCalendarResponse>> => ({
-  status: 200,
-  body: {
-    calendar: [
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 4],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 5],
-      [1, 2, 4],
-      [1, 3],
-      [1, 2],
-      [1],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 4],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 6],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 5],
-      [1, 2, 4],
-      [1, 3],
-      [1, 2],
-      [1],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 4],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 5],
-      [1, 2, 4],
-      [1, 3],
-      [1, 2],
-      [1],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 4],
-      [1, 2],
-      [1, 3],
-      [1, 2],
-      [1, 7],
-      [1, 2],
-      [1, 3],
-      [1, 2, 6],
-      [1, 5],
-      [1, 2, 4],
-      [1, 3],
-      [1, 2],
-      [1],
-    ],
-    cyclePosition: 1,
-  },
-});
+const getCalendar = async (): Promise<Response<GetCalendarResponse>> =>
+  API({
+    url: '/get-calendar',
+    method: 'POST',
+  })
+    .then(
+      (res) =>
+        ({
+          status: res.status,
+          body: res.data,
+        } as Response<GetCalendarResponse>)
+    )
+    .catch(
+      (err) =>
+        ({
+          status: err.status,
+        } as Response<GetCalendarResponse>)
+    );
 
 const updateCyclePosition = async (): Promise<Response<number>> => ({
   status: 201,
