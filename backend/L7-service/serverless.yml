@@ -1,0 +1,174 @@
+service: L7
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+frameworkVersion: '2'
+plugins:
+  - serverless-plugin-typescript
+  # - serverless-webpack
+
+# package:
+#   individually: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  profile: serverlessUser
+  lambdaHashingVersion: 20201221
+  region: ap-southeast-2
+  environment:
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+          - dynamodb:*
+          - cognito-idp:*
+      Resource: '*'
+
+custom:
+  tableName: L7-CC
+
+functions:
+  addCard:
+    handler: lambdas/endpoints/addCard.handler
+    events:
+      - http:
+          path: add-card
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  getAllCards:
+    handler: lambdas/endpoints/getAllCards.handler
+    events:
+      - http:
+          path: get-all-cards
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  deleteCard:
+    handler: lambdas/endpoints/deleteCard.handler
+    events:
+      - http:
+          path: delete-card/{ID}
+          method: DELETE
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  updateLevel:
+    handler: lambdas/endpoints/updateLevel.handler
+    events:
+      - http:
+          path: update-level
+          method: PATCH
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  getTodaysCards:
+    handler: lambdas/endpoints/getTodaysCards.handler
+    events:
+      - http:
+          path: get-todays-cards
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  getCalendar:
+    handler: lambdas/endpoints/getCalendar.handler
+    events:
+      - http:
+          path: get-calendar
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+  updateCyclePosition:
+    handler: lambdas/endpoints/updateCyclePosition.handler
+    events:
+      - http:
+          path: update-cycle-position/{Day}
+          method: POST
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: apiAuthorizer
+
+resources:
+  Resources:
+    L7DynamoDB:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: CardID
+            AttributeType: S
+          - AttributeName: UserID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: UserID
+            KeyType: HASH
+          - AttributeName: CardID
+            KeyType: RANGE
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: L7-user-pool
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - Name: CyclePosition
+            AttributeDataType: Number
+            Mutable: true
+          - Name: DayLastUpdated
+            AttributeDataType: Number
+            Mutable: true
+          - Name: CycleLastUpdate
+            AttributeDataType: DateTime
+            Mutable: true
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+          ClientName: L7-user-pool-client
+          UserPoolId:
+            Ref: CognitoUserPool
+          ExplicitAuthFlows:
+            - ADMIN_NO_SRP_AUTH
+          GenerateSecret: false
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    apiAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties: 
+        IdentitySource: method.request.header.authorization
+        Name: PricerAuthorizer
+        ProviderARNs: 
+          - Fn::GetAtt:
+            - CognitoUserPool
+            - Arn
+        RestApiId:     
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+
