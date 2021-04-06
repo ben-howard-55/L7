@@ -20,6 +20,8 @@ const Graph: React.FC<GraphProps> = ({ calendar = [], position = 0 }) => {
   // generate upcoming
   const upcoming: Calendar = [];
 
+  console.log(calendar);
+
   for (let i = 0; i < length; i++) {
     // console.log((calendarLength - 1 + (position - i - 1) % calendarLength));
     previous.push(calendar[(position + i + (calendarLength - length)) % calendarLength]);
@@ -27,6 +29,8 @@ const Graph: React.FC<GraphProps> = ({ calendar = [], position = 0 }) => {
   }
 
   const today = calendar[position];
+
+  console.log(upcoming);
 
   return (
     <Centered>

@@ -172,10 +172,24 @@ const getCalendar = async (): Promise<Response<GetCalendarResponse>> =>
         } as Response<GetCalendarResponse>)
     );
 
-const updateCyclePosition = async (): Promise<Response<number>> => ({
-  status: 201,
-  body: 2,
-});
+const updateCyclePosition = async (): Promise<Response<number>> =>
+  API({
+    url: `/update-cycle-position/${Math.floor(Date.now() / (60 * 60 * 24))}`,
+    method: 'POST',
+  })
+    .then(
+      (res) =>
+        ({
+          status: res.status,
+          body: res.data,
+        } as Response<number>)
+    )
+    .catch(
+      (err) =>
+        ({
+          status: err.status,
+        } as Response<number>)
+    );
 
 const mockAPI = {
   updateLevel,

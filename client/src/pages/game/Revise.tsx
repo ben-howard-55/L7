@@ -10,6 +10,7 @@ import { answerQuestion } from '../../redux/gameSlice/thunks/answerQuestion';
 import { fetchGameData } from '../../redux/gameSlice/thunks/fetchGameData';
 import { RootState, useAppDispatch } from '../../redux/store';
 import confetti from 'canvas-confetti';
+import { finishGame } from '../../redux/gameSlice/thunks/finishGame';
 
 const Revise: React.FC = () => {
   useHydrator((state) => state.game.hydratedGameState, fetchGameData);
@@ -32,6 +33,8 @@ const Revise: React.FC = () => {
   }, [dispatch, isReady]);
 
   if (isReady && !card && remainingCount === 0) {
+    // finished
+    dispatch(finishGame());
     confetti();
   }
 

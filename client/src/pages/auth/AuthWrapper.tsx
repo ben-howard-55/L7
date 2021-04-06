@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import Loading from '../../components/Loading';
 import { hydrateAuth } from '../../redux/authSlice/thunks/hydrateThunk';
 import { RootState, useAppDispatch } from '../../redux/store';
 import Login from './Login';
@@ -23,7 +24,7 @@ const AuthRouter: React.FC = ({ children }) => {
   }, [dispatch]);
 
   if (!isHydrated) {
-    return <h1>loading...</h1>;
+    return <Loading />;
   }
 
   return (
