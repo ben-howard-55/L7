@@ -2,6 +2,7 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 const AWS = require('aws-sdk');
 import Responses from '../common/API_Responses';
 import Dynamo from '../common/Dynamo';
+import chart from '../common/chart';
 
 const tableName = process.env.tableName;
 
@@ -15,15 +16,12 @@ export const handler: APIGatewayProxyHandler = async event => {
         return Responses._401({message: 'user unauthorized'});
     }
 
-    // GET auth
-    // let auth = event.headers.Authorization;
-
     // GET Current Cycle Position
-    let number = 0;
-    // number = event.requestContext.authorizer.claims['custom:CyclePosition'];
+    let number = event.requestContext.authorizer.claims['custom:CyclePosition'];
   
     // GET todays cycle numbers
-    let todaysLevels = [1, 2];
+    let todaysLevels = chart.arrays[number];
+    console.log(todaysLevels);
     
     // send a query asking for all cards that match todays requirements.
     const req = await Dynamo.queryTodays(UserId, number, todaysLevels, tableName);

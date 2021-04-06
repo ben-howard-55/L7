@@ -1,5 +1,4 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-const AWS = require('aws-sdk');
 import Responses from '../common/API_Responses';
 import Dynamo from '../common/Dynamo';
 

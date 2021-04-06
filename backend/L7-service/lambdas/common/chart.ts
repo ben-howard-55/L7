@@ -1,4 +1,4 @@
-{
+const chart = {
     "arrays": [     
         [1, 2],
         [1, 3],
@@ -66,3 +66,4 @@
         [1]
     ]
 }
+export default chart;
